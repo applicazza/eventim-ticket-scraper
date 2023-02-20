@@ -22,12 +22,13 @@ const logger = new Logger();
 mailer.setApiKey(env.SENDGRID_API_KEY);
 
 logger.info('Starting scraping every minute...');
-schedule.scheduleJob('* * * * *', async function () {
+const job = schedule.scheduleJob('* * * * *', async () => {
   logger.info('Starting puppeteer');
 
   const browser = await puppeteer.use(StealthPlugin()).launch({
     headless: true,
-    executablePath: executablePath(),
+    executablePath: executablePath() || '/usr/bin/google-chrome',
+    args: ['--no-sandbox'],
   });
 
   const page = await browser.newPage();
@@ -40,20 +41,30 @@ schedule.scheduleJob('* * * * *', async function () {
   );
 
   if (fastBookingFirstElement) {
-    logger.info('Sending an email');
-
-    await mailer.send({
+    /*await mailer.send({
       to: env.SENDGRID_TO.split(','),
       from: env.SENDGRID_FROM,
       subject: 'Tickets for sale detected',
       text: `There are tickets to grab! Go to ${env.EVENTIM_URL}`,
       html: `There are tickets to grab! <a href="${env.EVENTIM_URL}">Eventim</a>`,
-    });
+    });*/
+
+    logger.info('Sending an email');
+
+    job.reschedule('0 */6 * * *');
+
+    logger.info(
+      `Rescheduling next scraping at ${job.nextInvocation().toISOString()}`
+    );
   } else {
-    logger.info('Will try our luck later....');
+    logger.info(
+      `Will try our luck later at ${job.nextInvocation().toISOString()}`
+    );
   }
 
   logger.info('Closing puppeteer');
 
   await browser.close();
 });
+
+job.invoke();

@@ -1,0 +1,8 @@
+.env
+.editorconfig
+.gitattributes
+.gitignore
+.prettierignore
+.prettierrc.json
+dist
+node_modules
