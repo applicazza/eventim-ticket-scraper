@@ -8,6 +8,8 @@
     <node-interpreter value="project" />
     <envs>
       <env name="EVENTIM_URL" value="https://www.eventim.de/noapp/en/event/rammstein-europe-stadium-tour-2023-olympiastadion-berlin-15787872/?affiliate=OSS" />
+      <env name="SENDGRID_FROM" value="artyom@applicazza.com" />
+      <env name="SENDGRID_TO" value="artyom@applicazza.com" />
     </envs>
     <method v="2" />
   </configuration>
