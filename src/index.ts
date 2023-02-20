@@ -57,6 +57,8 @@ const job = schedule.scheduleJob('* * * * *', async () => {
       `Rescheduling next scraping at ${job.nextInvocation().toISOString()}`
     );
   } else {
+    job.reschedule('* * * * *');
+
     logger.info(
       `Will try our luck later at ${job.nextInvocation().toISOString()}`
     );
