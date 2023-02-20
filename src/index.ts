@@ -41,15 +41,15 @@ const job = schedule.scheduleJob('* * * * *', async () => {
   );
 
   if (fastBookingFirstElement) {
-    /*await mailer.send({
+    logger.info('Sending an email');
+
+    await mailer.send({
       to: env.SENDGRID_TO.split(','),
       from: env.SENDGRID_FROM,
       subject: 'Tickets for sale detected',
       text: `There are tickets to grab! Go to ${env.EVENTIM_URL}`,
       html: `There are tickets to grab! <a href="${env.EVENTIM_URL}">Eventim</a>`,
-    });*/
-
-    logger.info('Sending an email');
+    });
 
     job.reschedule('0 */6 * * *');
 
