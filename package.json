@@ -23,7 +23,9 @@
   "packageManager": "yarn@3.4.1",
   "private": true,
   "scripts": {
+    "build": "tsc",
     "dev": "node -r dotenv/config -r @swc-node/register src/index.ts",
-    "pretty": "prettier --write src"
+    "pretty": "prettier --write src",
+    "start": "node -r dotenv/config dist/index.js"
   }
 }
