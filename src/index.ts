@@ -10,9 +10,11 @@ import { executablePath } from 'puppeteer';
 
   const page = await browser.newPage();
 
-  await page.goto(
-    'https://www.eventim.de/noapp/en/event/rammstein-europe-stadium-tour-2023-olympiastadion-berlin-15787872/?affiliate=OSS'
-  );
+  if (!process.env.EVENTIM_URL) {
+    return;
+  }
+
+  await page.goto(process.env.EVENTIM_URL);
 
   let items = await page.$x(
     '//div[contains(concat(" ", normalize-space(@class), " "), " ticket-type-item ")]'
@@ -23,15 +25,17 @@ import { executablePath } from 'puppeteer';
     const priceContainer = await item.$('.ticket-type-price');
     const isUnavailableContainer = await item.$('.ticket-type-unavailable-sec');
 
-    const title = await titleContainer?.evaluate((el) => el.textContent?.trim());
-    const price = await priceContainer?.evaluate((el) => el.textContent?.trim());
-    const isUnavailable = await isUnavailableContainer?.evaluate(
-      (el) => el.textContent?.trim()
+    const title = await titleContainer?.evaluate((el) =>
+      el.textContent?.trim()
+    );
+    const price = await priceContainer?.evaluate((el) =>
+      el.textContent?.trim()
+    );
+    const isUnavailable = await isUnavailableContainer?.evaluate((el) =>
+      el.textContent?.trim()
     );
 
-    console.log(
-      `${title} -> ${price} -> ${isUnavailable}`
-    );
+    console.log(`${title} -> ${price} -> ${isUnavailable}`);
   }
 
   await browser.close();
