@@ -23,14 +23,14 @@ import { executablePath } from 'puppeteer';
     const priceContainer = await item.$('.ticket-type-price');
     const isUnavailableContainer = await item.$('.ticket-type-unavailable-sec');
 
-    const title = await titleContainer?.evaluate((el) => el.textContent);
-    const price = await priceContainer?.evaluate((el) => el.textContent);
+    const title = await titleContainer?.evaluate((el) => el.textContent?.trim());
+    const price = await priceContainer?.evaluate((el) => el.textContent?.trim());
     const isUnavailable = await isUnavailableContainer?.evaluate(
-      (el) => el.textContent
+      (el) => el.textContent?.trim()
     );
 
     console.log(
-      `${title?.trim()} -> ${price?.trim()} -> ${isUnavailable?.trim()}`
+      `${title} -> ${price} -> ${isUnavailable}`
     );
   }
 
