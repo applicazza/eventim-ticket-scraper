@@ -6,7 +6,9 @@
       <script value="dev" />
     </scripts>
     <node-interpreter value="project" />
-    <envs />
+    <envs>
+      <env name="EVENTIM_URL" value="https://www.eventim.de/noapp/en/event/rammstein-europe-stadium-tour-2023-olympiastadion-berlin-15787872/?affiliate=OSS" />
+    </envs>
     <method v="2" />
   </configuration>
 </component>
